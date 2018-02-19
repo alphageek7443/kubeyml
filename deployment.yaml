@@ -1,0 +1,39 @@
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: friendlyhello
+spec: 
+  replicas: 2
+  selector: 
+    matchLabels: 
+      app: friendlyhello
+  template: 
+    metadata: 
+      labels: 
+        app: friendlyhello
+    spec: 
+      containers: 
+        - 
+          image: "alphageek7443/friendlyhello:part3"
+          name: friendlyhello
+          ports: 
+            - 
+              containerPort: 8080
+              name: http
+--- 
+apiVersion: v1
+kind: Service
+metadata: 
+  labels: 
+    app: friendlyhello
+  name: friendlyhello
+spec: 
+  ports: 
+    - 
+      name: http
+      port: 8080
+      targetPort: 8080
+  selector: 
+    app: friendlyhello
+  type: LoadBalancer
